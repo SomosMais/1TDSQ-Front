@@ -26,6 +26,15 @@ body {
 
 *{
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE e Edge antigos */
+  scrollbar-width: none;     /* Firefox */
 }
