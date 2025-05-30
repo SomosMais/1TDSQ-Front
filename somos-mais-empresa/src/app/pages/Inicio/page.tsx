@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import Botao from "@/app/component/Botao/Botao";
 import Image from "next/image";
-const TipoUsuarioLogin = () => {
+const Inicio = () => {
     const router = useRouter();
 
     return(
@@ -17,12 +17,12 @@ const TipoUsuarioLogin = () => {
             </div>
 
             <div className="w-full h-[300px]  flex flex-col justify-center items-center">
-                <Botao cor="white" label="Comum" corTexto="#E63946" onClick={() => router.push("/pages/LoginComum")}/>
+                <Botao cor="white" label="Entrar" corTexto="#E63946" onClick={() => router.push("/pages/LoginEmpresa")}/>
                 <br/>
-                <Botao cor="#E63946" label="Empresa" corTexto="white"  onClick={() => router.push("/pages/LoginEmpresa")} />
+                <Botao cor="#E63946" label="Cadastrar" corTexto="white"  onClick={() => router.push("/pages/FormularioDadosEmpresa")} />
             </div>
         </>
     );
 }
 
-export default TipoUsuarioLogin;
+export default Inicio;
