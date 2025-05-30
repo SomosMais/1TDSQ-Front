@@ -17,9 +17,9 @@ const Inicio = () => {
             </div>
 
             <div className="w-full h-[300px]  flex flex-col justify-center items-center">
-                <Botao cor="white" label="Entrar" corTexto="#E63946" onClick={() => router.push("/pages/TipoUsuario")}/>
+                <Botao cor="white" label="Entrar" corTexto="#E63946" onClick={() => router.push("/pages/TipoUsuarioLogin")}/>
                 <br/>
-                <Botao cor="#E63946" label="Cadastrar" corTexto="white"  onClick={() => router.push("/pages/TipoUsuario")} />
+                <Botao cor="#E63946" label="Cadastrar" corTexto="white"  onClick={() => router.push("/pages/TipoUsuarioCadastro")} />
             </div>
         </>
     );

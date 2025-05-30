@@ -41,7 +41,7 @@ const LoginComum = () => {
 
                 const data = await response.json();
                 console.log("Login realizado com sucesso", data);
-                router.push("/pages/Dash");
+                router.push("/pages/Dashboard");
             }
             catch (err:any) {
                 setError(err.message ||"Usuário ou senha inválidos");
@@ -73,7 +73,7 @@ const LoginComum = () => {
                     <Botao corTexto="white" label="Entrar" type="submit"/>
                     <br />
                     
-                    <Link href={"/pages/RedefinirSenha"} className="text-[#E63946] ">Esqueci a senha</Link>
+                    <Link href={"/pages/RedefinirSenhaComum"} className="text-[#E63946] ">Esqueci a senha</Link>
                 </div>
             </form>
         </>
