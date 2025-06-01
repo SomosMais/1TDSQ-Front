@@ -6,9 +6,10 @@ const Hotbar = () => {
   const router = useRouter();
 
   const menuItems = [
-    { label: 'Início', icon: '/icons/home.png', path: '/pages/Home' },
-    { label: 'Histórico', icon: '/icons/historico.png', path: '/pages/Historico' },
-    { label: 'Perfil', icon: '/icons/perfil.png', path: '/pages/Perfil' },
+    { label: 'Início', icon: '/icons/icon_home.png', path: '/pages/Home' },
+    { label: 'Perfil', icon: '/icons/icon_adicionar.png', path: '/pages/Perfil' },
+    { label: 'Histórico', icon: '/icons/icon_historico.png', path: '/pages/Historico' },
+    { label: 'Perfil', icon: '/icons/icon_configuracao.png', path: '/pages/Perfil' },
   ];
 
   return (

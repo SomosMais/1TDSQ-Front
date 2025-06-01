@@ -1,79 +1,85 @@
+'use client';
+import { useEffect, useState } from "react";
+
+import Cards from "@/app/component/Cards/Cards";
+import Contador from "@/app/component/Contador/Constador";
+import Explorar from "@/app/component/Explorar/Explorar";
 import Hotbar from "@/app/component/Hotbar/Hotbat";
-import Image from "next/image";
+
 
 const Dashboard = () => {
+  const [qtdUsuarios, setQtdUsuarios] = useState(0);
+  const [qtdOngs, setQtdOngs] = useState(0);
+  const [empresas, setEmpresas] = useState<any[]>([]);
+
+   useEffect(() => {
+    // Fetch total de usuários
+    fetch("http://127.0.0.1:5000/mostrar_usuarios")
+      .then((res) => res.json())
+      .then((data) => {
+        setQtdUsuarios(data.length);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar usuários:", err);
+      });
+
+    // Fetch total de empresas (ONGs)
+    fetch("http://127.0.0.1:5000/numero_ongs")
+      .then((res) => res.json())
+      .then((data) => {
+        setQtdOngs(data["Numero de empresas"]);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar empresas:", err);
+      });
+
+    // Fetch lista de empresas para os cards
+    fetch("http://127.0.0.1:5000/mostrar_ongs")
+      .then((res) => res.json())
+      .then((data) => {
+        setEmpresas(data);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar empresas parceiras:", err);
+      });
+  }, []);
+
+
   return (
     <>
       <div className="w-full h-[740px]  pt-[30px]">
 
         <div className="flex justify-center items-center gap-10">
-          
-          <div className="w-[180px] h-[70px] bg-amber-50 rounded-2xl flex flex-col justify-center items-center">
-            <div className="h-[30px] flex items-center gap-2">
-                <Image src={"/image/"} alt="Icon usuário" width={25} height={25}></Image>
-                <h3>Pessoas Ajudas</h3>
-            </div>
-            <span className="text-2xl font-bold">10</span>
-          </div>
-
-          <div className="w-[180px] h-[70px] bg-amber-50 rounded-2xl flex flex-col justify-center items-center">
-            <div className="h-[30px] flex items-center gap-2">
-                <Image src={"/image/"} alt="Icon usuário" width={25} height={25}></Image>
-                <h3>Empresas Ativas</h3>
-            </div>
-            <span className="text-2xl font-bold">97</span>
-          </div>
-          
+          <Contador titulo="Pessoas Ajudadas" quantidade={qtdUsuarios} icon="icon_pessoa_ajudada.png"/>
+          <Contador titulo="Empresas Ativas" quantidade={qtdOngs} icon="icon_empresa_ativa.png"/>
         </div>
-        <div className="flex flex-col justify-start items-center w-full gap-10 mt-10 h-[600px] overflow-y-auto px-4 scrollbar-none">
 
-            <h1 className="text-2xl font-semibold text-left w-full ">Solicitações de Ajuda</h1>
-
-            <div className="w-[400px]  bg-gray-50 rounded-2xl flex justify-center items-center shadow-lg hover:bg-gray-100">
-                <div className="w-[400px] rounded-2xl flex">
-                    <div className="w-[25px] bg-green-400 rounded-l-2xl"></div>
-                    <div className="flex flex-col p-3 w-full">
-                        <h4 className="font-semibold text-left">Pedro de Senna</h4>
-                        <p className="text-[12px]">aberto: 21/03/2025</p>
-                        <span className="w-[180px] font-semibold text-[13px] text-center rounded-full bg-green-200 p-1 mb-2 mt-2">Ajuda com Roupa</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, sequi! Rerum, autem omnis? Eius eligendi voluptas itaque, dolore odio aliquid consequuntur quam aspernatur quae nulla iusto possimus dolorem exercitationem nobis!</p>
-                        <p><strong>Endereço: </strong>Rua Bergamota, 178 - Caudinha - SP</p>
-                    </div>
-                </div>
-
-                
+        <div className="flex flex-col mt-[20px] gap-2 w-full h-[200px] bg-gray-100 px-[15px] rounded-2xl shadow-lg">
+            <h3 className="font-semibold text-2xl text-left">Explore também</h3>
+            <div className="flex gap-10">
+                <Explorar icon="icon_somos+.png" titulo="Conheça SOMOS+" href="SomosMais"/>
+                <Explorar icon="icon_time.png" titulo="Nosso time" href="Grupo"/>
+                <Explorar icon="icon_jornal.png" titulo="Noticias" href="Noticias"/>
             </div>
 
-            <div className="w-[400px]  bg-gray-50 rounded-2xl flex justify-center items-center shadow-lg hover:bg-gray-100">
-                <div className="w-[400px] rounded-2xl flex">
-                    <div className="w-[25px] bg-red-400 rounded-l-2xl"></div>
-                    <div className="flex flex-col p-3 w-full">
-                        <h4 className="font-semibold text-left">Cleyton de Oliveira</h4>
-                        <p className="text-[12px]">aberto: 21/03/2025</p>
-                        <span className="w-[180px] font-semibold text-[13px] text-center rounded-full bg-red-200 p-1 mb-2 mt-2">Ajuda com Moradia</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, sequi! Rerum, autem omnis? Eius eligendi voluptas itaque, dolore odio aliquid consequuntur quam aspernatur quae nulla iusto possimus dolorem exercitationem nobis!</p>
-                        <p><strong>Endereço: </strong>Rua Tangerina Rodrigues de Carvalho, 18 - São José do Campos - SP</p>
-                    </div>
-                </div>
+        </div>
 
-                
-            </div>
 
-            <div className="w-[400px]  bg-gray-50 rounded-2xl flex justify-center items-center shadow-lg hover:bg-gray-100">
-                <div className="w-[400px] rounded-2xl flex">
-                    <div className="w-[25px] bg-green-400 rounded-l-2xl"></div>
-                    <div className="flex flex-col p-3 w-full">
-                        <h4 className="font-semibold text-left">Matheus Henrique</h4>
-                        <p className="text-[12px]">aberto: 21/03/2025</p>
-                        <span className="w-[180px] font-semibold text-[13px] text-center rounded-full bg-green-200 p-1 mb-2 mt-2">Ajuda com Alimentação</span>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, sequi! Rerum, autem omnis? Eius eligendi voluptas itaque.</p>
-                        <p><strong>Endereço: </strong>Avenida Europa, 1800 - Vila Olimpia - SP</p>
-                    </div>
-                </div>
-
-                
-            </div>
-
+        <div className="flex flex-col justify-start items-center w-full gap-1 mt-10 h-[380px] ">
+            <h1 className="text-2xl font-semibold text-left w-full  ml-10">Empresas Parceiras</h1>
+            <div className="flex flex-col  overflow-y-auto px-4 scrollbar-none w-full gap-10 h-[380px]">
+              {empresas.slice(1).map((empresa, index) =>  (
+              <Cards
+                key={index}
+                nome={empresa.Nome}
+                tipo_ajuda={"Ajuda Geral"}
+                descricao={empresa.descricao || "Esta empresa está cadastrada para apoiar em causas humanitárias."}
+                endereco={empresa.endereco.join(", ")}
+                backgroundColor="#D5D5D5"
+                backgroundColor2="#A8DADC"
+              />
+            ))}
+          </div>
         </div>
 
       </div>
