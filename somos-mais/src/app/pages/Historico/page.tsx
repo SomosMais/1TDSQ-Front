@@ -43,7 +43,7 @@ const Historico = () => {
   return (
     <>
       <div className="w-full h-[740px] pt-[30px]">
-        <div className="flex flex-col justify-start items-center w-full gap-10 h-[740px] overflow-y-auto px-4 scrollbar-none">
+        <div className="flex flex-col justify-start items-center w-full gap-10 h-[705px] overflow-y-auto px-4 scrollbar-none">
           <h1 className="text-2xl font-semibold text-left w-full">Solicitações de Ajuda</h1>
 
           {pedidos.length > 0 ? (

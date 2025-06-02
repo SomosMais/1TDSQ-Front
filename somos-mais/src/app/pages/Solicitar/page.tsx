@@ -19,19 +19,21 @@ const SolicitarAjuda = () => {
   const [mensagem, setMensagem] = useState("");
 
   useEffect(() => {
-  if (id) {
-    fetch(`http://localhost:5000/historico/cliente/${localStorage.getItem("email")}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const pedido = data.find((p: any) => p.id_pedido == id);
-        if (pedido) {
-          setDescricao(pedido.descricao);
-          setUrgencia(pedido.urgente);
-          setTipo(pedido["tipo pedido"]);
-        }
-      });
-  }
-}, [id]);
+    if (id) {
+      fetch(`http://localhost:5000/historico/cliente/${localStorage.getItem("email")}`)
+        .then((res) => res.json())
+        .then((data) => {
+          const pedido = data.find((p: any) => p.id_pedido == id);
+          if (pedido) {
+            console.log("Editando pedido:", pedido);
+            setDescricao(pedido.descricao);
+            setUrgencia(pedido.urgente);
+            setTipo(pedido.id_tipo_pedido?.toString() ?? "");
+          }
+        });
+    }
+  }, [id]);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -94,9 +96,19 @@ const SolicitarAjuda = () => {
           className="w-full h-[50px] border border-gray-300 rounded-lg mb-4 px-2"
         >
           <option value="">Selecione o tipo de ajuda</option>
-          <option value="1">Alimentação</option>
-          <option value="2">Abrigo</option>
-          <option value="3">Medicamentos</option>
+          <option value="1">Resgate de Vítimas</option>
+          <option value="2">Resgate de Animais</option> 
+          <option value="3">Ajuda Humanitária</option>
+          <option value="4">Apoio em Enchentes</option>
+          <option value="5">Apoio em Deslizamento</option>
+          <option value="6">Transporte de Vítimas</option>
+          <option value="7">Busca e Salvamento</option>
+          <option value="8">Atendimento Médico</option>
+          <option value="9">Doação de Alimentos</option>
+          <option value="10">Doação de Roupas</option>
+          <option value="11">Solicitação de Abrigo</option>
+          <option value="12">Acesso a Água Potável</option>
+          <option value="13">Forcecimento de Energia Emergencial</option>
         </select>
 
         {/* Descrição */}

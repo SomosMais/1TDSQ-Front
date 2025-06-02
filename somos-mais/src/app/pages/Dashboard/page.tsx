@@ -14,15 +14,22 @@ const Dashboard = () => {
   const [empresas, setEmpresas] = useState<any[]>([]);
 
    useEffect(() => {
-    // Fetch total de usuários
-    fetch("http://127.0.0.1:5000/mostrar_usuarios")
-      .then((res) => res.json())
-      .then((data) => {
-        setQtdUsuarios(data.length);
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar usuários:", err);
-      });
+    // Fetch total de usuários ajudados
+    fetch("http://127.0.0.1:5000/numero_pedidos_concluidos")
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Erro ao buscar dados de pedidos concluídos");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      setQtdUsuarios(data["Numero de pedidos concluidos"]);
+    })
+    .catch((err) => {
+      console.error("Erro ao buscar número de usuários ajudados:", err);
+    });
+
+
 
     // Fetch total de empresas (ONGs)
     fetch("http://127.0.0.1:5000/numero_ongs")
@@ -64,7 +71,6 @@ const Dashboard = () => {
             </div>
 
         </div>
-
 
         <div className="flex flex-col justify-start items-center w-full gap-1 mt-10 h-[380px] ">
             <h1 className="text-2xl font-semibold text-left w-full  ml-10">Empresas Parceiras</h1>

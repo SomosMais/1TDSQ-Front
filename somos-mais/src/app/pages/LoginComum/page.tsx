@@ -39,7 +39,7 @@ const LoginComum = () => {
             const data = await response.json();
             console.log("Login realizado com sucesso", data);
 
-            localStorage.setItem("email", email); // salva o email para uso posterior
+            localStorage.setItem("email", email); 
             router.push("/pages/Dashboard");
         } catch (err: any) {
             setError(err.message || "Usuário ou senha inválidos");

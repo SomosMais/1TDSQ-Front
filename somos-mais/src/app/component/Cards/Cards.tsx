@@ -15,7 +15,7 @@ type CardsProps = {
 const Cards: React.FC<CardsProps> = (
     {id, nome = "Nome", data_abertura, data_aceitacao='Data aceitacao', tipo_ajuda="Tipo Ajuda", descricao = "Descricao",
         urgente = 'N',
-        onCancel
+        onCancel 
     }
 ) => {
 
@@ -50,13 +50,23 @@ const Cards: React.FC<CardsProps> = (
                     <div className="flex flex-col p-3 w-full">
                         <div className='flex gap-2'>
                             <h4 className="font-semibold text-left">{nome}</h4>
-                            <button onClick={handleCancelar} className='text-[#E63946] hover:underline'>Cancelar</button>
+                            {tipoStatus !== "Atendido" && (
+                        <div className="flex gap-5">
+                            <button onClick={handleCancelar} className="text-[#E63946] hover:underline">
+                            Cancelar
+                            </button>
                             <button
-                                onClick={() => window.location.href = `/pages/Solicitar?id=${id}`}
-                                className="text-blue-500 hover:underline ml-4"
-                                >
-                                Editar
-                                </button>
+                            onClick={() => {
+                                if (id) {
+                                window.location.href = `/pages/Solicitar?id=${id}`;
+                                }
+                            }}
+                            className="text-blue-600 hover:underline"
+                            >
+                            Editar
+                            </button>
+                        </div>
+                        )}
                         </div>
                         
                         <p className="text-[12px]">{data_abertura}</p>
