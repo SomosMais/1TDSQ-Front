@@ -9,7 +9,7 @@ const Perfil = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("email");
-        router.push("/pages/Login"); 
+        router.push("/pages/LoginComum"); 
     }
 
     return (
