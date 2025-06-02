@@ -44,7 +44,7 @@ const RedefinirSenhaComum = () => {
 
             setSucesso(true);
             setTimeout(() => {
-                router.push("/pages/Login");
+                router.push("/pages/LoginComum");
             }, 2000);
         } catch (err: any) {
             setErro(err.message || "Erro ao redefinir a senha. Tente novamente.");
