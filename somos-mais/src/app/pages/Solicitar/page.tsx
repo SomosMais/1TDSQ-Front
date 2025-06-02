@@ -1,78 +1,134 @@
 'use client';
 import { useRouter } from "next/navigation";
 import Botao from "@/app/component/Botao/Botao";
-import Input from "@/app/component/Input/Input";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Hotbar from "@/app/component/Hotbar/Hotbat";
+import { useSearchParams } from "next/navigation";
 
-const RedefinirSenhaComum = () => {
-    const router = useRouter();
 
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    const [confirmarSenha, setConfirmarSenha] = useState("");
-    const [erro, setErro] = useState("");
-    const [sucesso, setSucesso] = useState(false);
+const SolicitarAjuda = () => {
 
-    const handleRedefinirSenhaComum = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setErro("");
-        setSucesso(false);
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const router = useRouter();
 
-        if (senha !== confirmarSenha) {
-            setErro("As senhas não coincidem.");
-            return;
+  const [descricao, setDescricao] = useState("");
+  const [urgencia, setUrgencia] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [mensagem, setMensagem] = useState("");
+
+  useEffect(() => {
+  if (id) {
+    fetch(`http://localhost:5000/historico/cliente/${localStorage.getItem("email")}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const pedido = data.find((p: any) => p.id_pedido == id);
+        if (pedido) {
+          setDescricao(pedido.descricao);
+          setUrgencia(pedido.urgente);
+          setTipo(pedido["tipo pedido"]);
         }
+      });
+  }
+}, [id]);
 
-        try {
-            const response = await fetch("http://localhost:8080/usuario/atualizar-senha", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: email,
-                    novaSenha: senha
-                }),
-            });
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  const email_usuario = localStorage.getItem("email");
 
-            const texto = await response.text();
+  if (!descricao || !urgencia || !tipo || !email_usuario) {
+    setMensagem("Preencha todos os campos!");
+    return;
+  }
 
-            if (!response.ok) {
-                throw new Error(texto || "Erro ao redefinir a senha");
-            }
+  const url = id
+    ? `http://localhost:5000/atualizar_pedido/${id}`
+    : `http://localhost:5000/cadastro_pedido_ajuda`;
 
-            setSucesso(true);
-            setTimeout(() => {
-                router.push("/pages/Login");
-            }, 2000);
-        } catch (err: any) {
-            setErro(err.message || "Erro ao redefinir a senha. Tente novamente.");
-        }
-    };
+  const metodo = id ? "PATCH" : "POST";
 
-    return (
-        <>
-            <div className="w-full h-[300px] rounded-t-lg">
-                <Image src="/image/onda_login.png" alt="" width={300} height={220} className="rounded-tl-lg" />
-                <Image src="/image/logo.png" alt="logo" width={250} height={220} className="-translate-y-[230px] translate-x-[100px]" />
-            </div>
+  try {
+    const response = await fetch(url, {
+      method: metodo,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        descricao,
+        urgencia,
+        tipo,
+        email_usuario,
+      }),
+    });
 
-            <form onSubmit={handleRedefinirSenhaComum} className="w-full h-[400px] flex flex-col items-center justify-center">
-                <h2 className="text-[#212529] mb-10  text-2xl">Solicitar Ajuda</h2>
+    const data = await response.json();
 
-                <Input placeholder="Digite seu email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <Input placeholder="Digite sua nova senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
-                <Input placeholder="Confirme a nova senha" type="password" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} />
-
-                {erro && <p className="text-red-500 mt-3">{erro}</p>}
-                {sucesso && <p className="text-green-500 mt-3">Senha atualizada com sucesso!</p>}
-
-                <br />
-                <Botao corTexto="white" label="Redefinir" type="submit" />
-            </form>
-        </>
-    );
+    if (response.ok) {
+      alert(data.msg);
+      router.push("/pages/Historico");
+    } else {
+      setMensagem(data.msg || "Erro na operação.");
+    }
+  } catch (error) {
+    console.error("Erro:", error);
+    setMensagem("Erro na solicitação. Tente novamente.");
+  }
 };
 
-export default RedefinirSenhaComum;
+
+  return (
+    <>
+      <div className="w-full h-[300px] rounded-t-lg">
+        <Image src="/image/onda_login.png" alt="" width={300} height={220} className="rounded-tl-lg" />
+        <Image src="/image/logo.png" alt="logo" width={250} height={220} className="-translate-y-[230px] translate-x-[100px]" />
+      </div>
+
+      <form onSubmit={handleSubmit} className="w-full h-[440px] flex flex-col items-center justify-center px-10">
+        <h2 className="text-[#212529] mb-6 text-2xl">Solicitar Ajuda</h2>
+
+        {/* Tipo de ajuda */}
+        <select
+          value={tipo}
+          onChange={(e) => setTipo(e.target.value)}
+          className="w-full h-[50px] border border-gray-300 rounded-lg mb-4 px-2"
+        >
+          <option value="">Selecione o tipo de ajuda</option>
+          <option value="1">Alimentação</option>
+          <option value="2">Abrigo</option>
+          <option value="3">Medicamentos</option>
+        </select>
+
+        {/* Descrição */}
+        <textarea
+          value={descricao}
+          onChange={(e) => {
+            if (e.target.value.length <= 255) setDescricao(e.target.value);
+          }}
+          className="w-full h-[100px] border border-gray-300 rounded-lg mb-1 px-2 py-1 resize-none"
+          placeholder="Descreva a situação..."
+        ></textarea>
+        <p className="text-sm text-right w-full mb-4 text-gray-500">{descricao.length}/255</p>
+
+        {/* Urgência */}
+        <select
+          value={urgencia}
+          onChange={(e) => setUrgencia(e.target.value)}
+          className="w-full h-[50px] border border-gray-300 rounded-lg mb-4 px-2"
+        >
+          <option value="">Selecione a urgência</option>
+          <option value="S">Urgente</option>
+          <option value="N">Não Urgente</option>
+        </select>
+
+        {mensagem && <p className="text-red-500 text-sm mb-2">{mensagem}</p>}
+
+        <Botao corTexto="white" label="Solicitar" type="submit" />
+      </form>
+
+      <Hotbar />
+    </>
+  );
+};
+
+export default SolicitarAjuda;

@@ -1,13 +1,26 @@
+'use client'
+
+import { useRouter } from 'next/navigation';
 import Hotbar from "@/app/component/Hotbar/Hotbat";
 import Image from 'next/image';
 
 const Perfil = () => {
+    const router = useRouter();
+
+    const handleLogout = () => {
+        localStorage.removeItem("email");
+        router.push("/pages/Login"); 
+    }
+
     return (
         <>
             <div className="w-full h-[740px] pt-[30px] flex justify-start items-center p-8">
-                <div className="w-full h-100px rounded-2xl flex shadow-2xl bg-gray-50 justify-start items-center gap-4 p-4">
+                <div 
+                    onClick={handleLogout}
+                    className="w-full h-[100px] rounded-2xl flex shadow-2xl bg-gray-50 justify-start items-center gap-4 p-4 cursor-pointer hover:bg-red-100 transition"
+                >
                     <Image src={"/icons/icon_sair.png"} alt="Icon sair" width={30} height={30} className="rounded-full" />
-                    <p>Sair da conta</p>
+                    <p className="font-semibold text-red-500">Sair da conta</p>
                 </div>
             </div>
             <Hotbar/>
