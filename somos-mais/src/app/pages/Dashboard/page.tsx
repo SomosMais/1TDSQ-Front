@@ -58,7 +58,7 @@ const Dashboard = () => {
         <div className="flex flex-col mt-[20px] gap-2 w-full h-[200px] bg-gray-100 px-[15px] rounded-2xl shadow-lg">
             <h3 className="font-semibold text-2xl text-left">Explore também</h3>
             <div className="flex gap-10">
-                <Explorar icon="icon_somos+.png" titulo="Conheça SOMOS+" href="SomosMais"/>
+                <Explorar icon="icon_somos+.png" titulo="Conheça SOMOS+" href="Empresa"/>
                 <Explorar icon="icon_time.png" titulo="Nosso time" href="Grupo"/>
                 <Explorar icon="icon_jornal.png" titulo="Noticias" href="Noticias"/>
             </div>
