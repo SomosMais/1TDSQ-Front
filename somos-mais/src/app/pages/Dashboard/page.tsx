@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 
-import Cards from "@/app/component/Cards/Cards";
+
 import Contador from "@/app/component/Contador/Constador";
 import Explorar from "@/app/component/Explorar/Explorar";
 import Hotbar from "@/app/component/Hotbar/Hotbat";
