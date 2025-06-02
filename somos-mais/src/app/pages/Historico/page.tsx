@@ -1,29 +1,74 @@
+'use client';
+import { useEffect, useState } from "react";
 import Cards from "@/app/component/Cards/Cards";
 import Hotbar from "@/app/component/Hotbar/Hotbat";
-import Image from "next/image";
+
+interface PedidoAjuda {
+  Nome: string;
+  id_usuario: number;
+  id_pedido: number;
+  descricao: string;
+  data_criacao: string;
+  data_aceitacao: string;
+  urgente: string;
+  status: string;
+  "tipo pedido": string;
+}
 
 const Historico = () => {
+  const [pedidos, setPedidos] = useState<PedidoAjuda[]>([]);
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const emailSalvo = localStorage.getItem("email");
+    if (emailSalvo) {
+      setEmail(emailSalvo);
+      fetch(`http://localhost:5000/historico/cliente/${emailSalvo}`)
+        .then((res) => res.json())
+        .then((data) => {
+         if (Array.isArray(data)) {
+          setPedidos(data);
+        } else {
+          setPedidos([]);
+          console.warn("Nenhum pedido retornado.");
+        }
+
+        })
+        .catch((err) => {
+          console.error("Erro ao buscar histórico:", err);
+        });
+    }
+  }, []);
+
   return (
     <>
       <div className="w-full h-[740px] pt-[30px]">
-
         <div className="flex flex-col justify-start items-center w-full gap-10 h-[740px] overflow-y-auto px-4 scrollbar-none">
+          <h1 className="text-2xl font-semibold text-left w-full">Solicitações de Ajuda</h1>
 
-            <h1 className="text-2xl font-semibold text-left w-full ">Solicitações de Ajuda</h1>
-
-            <Cards nome="Pedro de Senna Souza" data_abertura="21/03/2025" tipo_ajuda="Ajuda com Moradia" descricao="Estou precisando de um lugar para ficar, pois minha casa ficou cheia de água depois dessa útilma chuva" endereco="Rua Sagui, 69 - São Mateus - SP"/>
-            <Cards nome="Pedro de Senna Souza" data_abertura="21/03/2025" tipo_ajuda="Ajuda com Moradia" descricao="Estou precisando de um lugar para ficar, pois minha casa ficou cheia de água depois dessa útilma chuva" endereco="Rua Sagui, 69 - São Mateus - SP"/>
-            <Cards nome="Pedro de Senna Souza" data_abertura="21/03/2025" tipo_ajuda="Ajuda com Moradia" descricao="Estou precisando de um lugar para ficar, pois minha casa ficou cheia de água depois dessa útilma chuva" endereco="Rua Sagui, 69 - São Mateus - SP"/>
-
-
+          {pedidos.length > 0 ? (
+            pedidos.map((pedido, index) => (
+              <Cards
+                key={index}
+                id={pedido.id_pedido}
+                nome={pedido.Nome}
+                data_abertura={pedido.data_criacao}
+                data_aceitacao={pedido.data_aceitacao}
+                tipo_ajuda={pedido["tipo pedido"]}
+                descricao={pedido.descricao}
+                urgente={pedido.urgente}
+                onCancel={(id) => {
+                  setPedidos((prev) => prev.filter((p) => p.id_pedido !== id));
+                }}
+              />
+            ))
+          ) : (
+            <p className="text-lg text-gray-600 mt-4">Não há pedidos registrados.</p>
+          )}
 
         </div>
-
       </div>
-    
-        <Hotbar />
-      
-      
+      <Hotbar />
     </>
   );
 };

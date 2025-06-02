@@ -5,6 +5,7 @@ import Cards from "@/app/component/Cards/Cards";
 import Contador from "@/app/component/Contador/Constador";
 import Explorar from "@/app/component/Explorar/Explorar";
 import Hotbar from "@/app/component/Hotbar/Hotbat";
+import CardEmpresa from "@/app/component/CardEmpresa/CardEmpresa";
 
 
 const Dashboard = () => {
@@ -69,7 +70,7 @@ const Dashboard = () => {
             <h1 className="text-2xl font-semibold text-left w-full  ml-10">Empresas Parceiras</h1>
             <div className="flex flex-col  overflow-y-auto px-4 scrollbar-none w-full gap-10 h-[380px]">
               {empresas.slice(1).map((empresa, index) =>  (
-              <Cards
+              <CardEmpresa
                 key={index}
                 nome={empresa.Nome}
                 tipo_ajuda={"Ajuda Geral"}
