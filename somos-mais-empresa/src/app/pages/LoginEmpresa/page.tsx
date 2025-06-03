@@ -41,6 +41,7 @@ const LoginEmpresa= () => {
 
                 const data = await response.json();
                 console.log("Login realizado com sucesso", data);
+                localStorage.setItem("email_empresa", email); 
                 router.push("/pages/Dashboard");
             }
             catch (err:any) {
@@ -69,9 +70,10 @@ const LoginEmpresa= () => {
                     />
                     <br />
                     {erro && <p className="text-red-500">{erro}</p>}
-                    <Botao corTexto="white" label="Entrar" onClick={() => router.push("/pages/Dashboard")} type="submit"/>
+                    <Botao corTexto="white" label="Entrar" type="submit"/>
+
                     <br />
-                    <Link href={"/pages/RedefinirSenha"} className="text-[#E63946] ">Esqueci a senha</Link>
+                    <Link href={"/pages/RedefinirSenhaEmpresa"} className="text-[#E63946] ">Esqueci a senha</Link>
                 </div>
             </form>
         </>

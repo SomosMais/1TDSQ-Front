@@ -82,7 +82,7 @@ const FormularioDadosEmpresa = () => {
             }
 
             setSucesso(true);
-            router.push("/pages/LoginComum");
+            router.push("/pages/LoginEmpresa");
         }
         catch (err: any) {
             setErro(err.message || "Erro ao cadastrar usuário. Tente novamente.");
