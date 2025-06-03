@@ -1,51 +1,76 @@
-# 🆘 Sistema de Apoio a Desastres - Histórico de Pedidos da Empresa
+# 🆘 SOMOS+ - Sistema de Ajuda em Desastres Naturais
 
-Este projeto faz parte de uma plataforma de auxílio em situações de desastre. A funcionalidade aqui documentada é o **Histórico de Pedidos Atendidos por Empresas**, permitindo que empresas visualizem os pedidos que aceitaram e concluíram, como resgates, doações e ajuda humanitária.
-
----
-
-## 🔧 Tecnologias Utilizadas
-
-### 🖥️ Front-end
-- [Next.js](https://nextjs.org/) (React)
-- Tailwind CSS
-- TypeScript
-
-### 🖧 Back-end
-- Flask (Python)
-- Oracle Database
-- SQL
+A **SOMOS+** é uma solução criada com o objetivo de **conectar pessoas em situação de emergência causadas por desastres naturais com empresas ou agentes de ajuda**. Através de um web app, é possível registrar ocorrências, visualizar pedidos e acompanhar o andamento do suporte.
 
 ---
 
-## 🚀 Funcionalidades
+## 🧩 Tecnologias Utilizadas
 
-### 📁 Front-end
-- Listagem dos pedidos atendidos por uma empresa.
-- Exibição dos dados:
-  - Nome do solicitante
-  - Datas de criação e aceitação do pedido
-  - Tipo de pedido (ex: Resgate de Vítimas, Doação de Alimentos, etc.)
-  - Status do pedido (Concluído ou Em Andamento)
-  - Endereço completo do solicitante
-  - Urgência do pedido (com indicação por cor)
+- React
+- TailwindCSS
+- Bando de dados Oracle
+- Python API REST
+- Java Quarkus API REST
 
-### 🧠 Back-end (API Flask)
-- Endpoint: `GET /historico/empresa/<email>`
-  - Busca o `id_empresa` com base no email fornecido.
-  - Consulta todos os pedidos associados à empresa.
-  - Retorna uma lista JSON com todos os pedidos formatados.
+
+### 🧠 API
+- Python + Flask
+- Java Quarkus
+- Banco de dados Oracle
 
 ---
 
-## 🧩 Estrutura do Projeto
+## 🗺️ Como Funciona?
 
-### 📦 Front-end (`app/component/Card_Historico/`)
-- `CardHistorico.tsx`: Renderiza os pedidos com destaque visual para urgência e status.
-- `HistoricoCliente.tsx`: Página principal que busca os dados e envia para o componente `CardHistorico`.
+### Para Usuários (Aplicativo)
+1. 📝 Cria uma conta com dados pessoais e dados de endereço.
+2. 🚨 Registra ocorrências com informações como:
+   - Nome
+   - Endereço
+   - Tipo de problema (enchente, desabamento, etc.)
+   - Descrição
+3. 🔍 Acompanha o histórico das solicitações
 
-### 🔙 Back-end (Flask)
-```python
-@app.route("/historico/empresa/<email>", methods=["GET"])
-def historico_pedido_empresa(email):
-    ...
+---
+
+## 🔄 Integração
+
+- O **web app envia os dados** para as API de JAVA e Python.
+- Há também uma **API Python com Oracle** que pode ser usada por usuários e ONGs para consultar o histórico e registrar atendimentos.
+- Há também uma **API JAVA QUARKUS com Oracle** que pode ser usada por usuários e ONGs para cadastrar, realizar login e refeinir senha.
+
+---
+
+## 🔧 Estrutura da Aplicação
+
+📁 mobile-app/
+├── components/
+├── screens/
+└── firebase/
+
+📁 portal-web/
+├── src/
+│ ├── controller/
+│ ├── service/
+│ ├── repository/
+│ └── templates/
+└── application.properties
+
+📁 api-flask/
+└── app.py
+
+
+## 🔗 Links Importantes
+
+- [📂 Repositório da API de JAVA (GitHub)](https://github.com/seu-repo/storm-safety)
+- [▶️ Vídeo de Demonstração no YouTube](https://youtube.com/seu-video)
+
+---
+
+## 👨‍💻 Equipe
+
+| Nome                                   | RM      | Função                     |
+|----------------------------------------|---------|----------------------------|
+| Cleyton Enrike de Oliveira             | 560485  | Back-end / Documentação    |
+| Matheus Henrique Nascimento de Freitas | 560442  | Front-end / Documentação   |
+| Pedro Henrique Sena                    | 561178  | Back-end / Documentação    |
