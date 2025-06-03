@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import Hotbar from '@/app/component/Hotbar/Hotbar';
-
+import Hotbar from '@/app/component/Hotbar/Hotbat';
 
 type Integrante = {
   nome: string;

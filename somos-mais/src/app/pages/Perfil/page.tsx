@@ -1,8 +1,9 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
-import Hotbar from "@/app/component/Hotbar/Hotbat";
+
 import Image from 'next/image';
+import Hotbar from '@/app/component/Hotbar/Hotbar';
 
 const Perfil = () => {
     const router = useRouter();

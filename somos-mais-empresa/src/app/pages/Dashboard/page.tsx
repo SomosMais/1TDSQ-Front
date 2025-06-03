@@ -89,7 +89,7 @@ const Dashboard = () => {
           </select>
           <button
             onClick={aplicarFiltro}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="bg-[#E63946] text-white px-4 py-2 rounded-lg hover:bg-[#E63120] cursor-pointer"
           >
             Aplicar Filtro
           </button>

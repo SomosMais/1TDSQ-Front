@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useState } from "react";
 import Cards from "@/app/component/Cards/Cards";
-import Hotbar from "@/app/component/Hotbar/Hotbat";
+import Hotbar from "@/app/component/Hotbar/Hotbar";
+
 
 interface PedidoAjuda {
   Nome: string;

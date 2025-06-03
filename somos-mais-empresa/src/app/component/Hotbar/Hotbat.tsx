@@ -7,7 +7,7 @@ const Hotbar = () => {
 
   const menuItems = [
     { label: 'Início', icon: '/icons/icon_home.png', path: '/pages/Dashboard' },
-    { label: 'Solicitar', icon: '/icons/icon_adicionar.png', path: '/pages/Solicitar' },
+    { label: 'Dados', icon: '/icons/icon_grafico.png', path: '/pages/Dados' },
     { label: 'Histórico', icon: '/icons/icon_historico.png', path: '/pages/Historico' },
     { label: 'Perfil', icon: '/icons/icon_configuracao.png', path: '/pages/Perfil' },
   ];

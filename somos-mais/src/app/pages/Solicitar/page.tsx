@@ -3,8 +3,8 @@ import { useRouter } from "next/navigation";
 import Botao from "@/app/component/Botao/Botao";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import Hotbar from "@/app/component/Hotbar/Hotbat";
 import { useSearchParams } from "next/navigation";
+import Hotbar from "@/app/component/Hotbar/Hotbar";
 
 
 const SolicitarAjuda = () => {
@@ -46,7 +46,7 @@ const SolicitarAjuda = () => {
 
   const url = id
     ? `http://localhost:5000/atualizar_pedido/${id}`
-    : `http://localhost:5000/cadastro_pedido_ajuda`;
+    : `https://onetdsq-python.onrender.com/cadastro_pedido_ajuda`;
 
   const metodo = id ? "PATCH" : "POST";
 
