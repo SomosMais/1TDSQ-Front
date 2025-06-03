@@ -22,7 +22,7 @@ A **SOMOS+** é uma solução criada com o objetivo de **conectar pessoas em sit
 
 ## 🗺️ Como Funciona?
 
-### Para Usuários (Aplicativo)
+### Para Usuários 
 1. 📝 Cria uma conta com dados pessoais e dados de endereço.
 2. 🚨 Registra ocorrências com informações como:
    - Nome
@@ -30,6 +30,15 @@ A **SOMOS+** é uma solução criada com o objetivo de **conectar pessoas em sit
    - Tipo de problema (enchente, desabamento, etc.)
    - Descrição
 3. 🔍 Acompanha o histórico das solicitações
+
+### Para Empresas
+1. 📝 Cria uma conta com dados da empresa e dados de endereço.
+2. 🚨 Acompanha pedidos pendentes de ocorrências com informações como:
+   - Nome
+   - Endereço
+   - Tipo de problema (enchente, desabamento, etc.)
+   - Descrição
+3. 🔍 Acompanha o histórico dos pedidos atendidos
 
 ---
 
@@ -43,21 +52,33 @@ A **SOMOS+** é uma solução criada com o objetivo de **conectar pessoas em sit
 
 ## 🔧 Estrutura da Aplicação
 
-📁 mobile-app/
-├── components/
-├── screens/
-└── firebase/
-
-📁 portal-web/
+📁 somos-mais/
 ├── src/
-│ ├── controller/
-│ ├── service/
-│ ├── repository/
-│ └── templates/
-└── application.properties
+│ ├── Dashboard/
+│ ├── Empresa/
+│ ├── FormularioDadosComum/
+│ ├── Grupo/
+│ ├── Historico/
+│ ├── Inicio/
+│ ├── LoginComum/
+│ ├── Perfil/
+│ ├── Noticias/
+│ ├── RedefinirSenhaComum/
+│ └── Solicitar/
 
-📁 api-flask/
-└── app.py
+📁 somos-mais-empresa/
+├── src/
+│ ├── Dashboard/
+│ ├── Empresa/
+│ ├── FormularioDadosEmpresa/
+│ ├── Grupo/
+│ ├── Historico/
+│ ├── Inicio/
+│ ├── LoginEmpresa/
+│ ├── Perfil/
+│ ├── Noticias/
+│ ├── RedefinirSenhaEmpresa/
+│ └── Solicitar/
 
 
 ## 🔗 Links Importantes
