@@ -1,45 +1,72 @@
-// pages/HistoricoCliente.tsx
+// HistoricoCliente.tsx
 'use client';
 import { useEffect, useState } from "react";
 import Hotbar from "@/app/component/Hotbar/Hotbat";
 import CardHistoricoItem from "@/app/component/Card_Historico/Card_Historico";
 
 interface PedidoAjuda {
-  Nome: string;
-  id_usuario: number;
   id_pedido: number;
   descricao: string;
   data_criacao: string;
   data_aceitacao: string;
   urgente: string;
+  nome_usuario: string;
+  tipo_pedido: string;
   status: string;
-  "tipo pedido": string;
+  endereco: string;
 }
+
+const tipoPedidoMap: { [key: number]: string } = {
+  1: "Resgate de Vítimas",
+  2: "Resgate de Animais",
+  3: "Ajuda Humanitária",
+  4: "Apoio em Enchentes",
+  5: "Apoio em Deslizamentos",
+  6: "Transporte de Vítimas",
+  7: "Busca e Salvamento",
+  8: "Atendimento Médico",
+  9: "Doação de Alimentos",
+  10: "Doação de Roupas",
+  11: "Solicitação de Abrigo",
+  12: "Acesso à Água Potável",
+  13: "Fornecimento de Energia Emergencial"
+};
 
 const HistoricoCliente = () => {
   const [pedidos, setPedidos] = useState<PedidoAjuda[]>([]);
 
   useEffect(() => {
-  const emailSalvo = localStorage.getItem("email_empresa");
-  console.log("Email salvo:", emailSalvo); // ADICIONE ISSO
+    const emailSalvo = localStorage.getItem("email_empresa");
 
-  if (emailSalvo) {
-    fetch(`http://localhost:5000/historico/empresa/${emailSalvo}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Dados recebidos:", data); // VERIFIQUE SE CHEGA AQUI
-        if (Array.isArray(data)) {
-          setPedidos(data);
-        } else {
-          setPedidos([]);
-        }
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar histórico da empresa:", err);
-      });
-  }
-}, []);
+    if (emailSalvo) {
+      fetch(`http://localhost:5000/historico/empresa/${emailSalvo}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            const pedidosConvertidos: PedidoAjuda[] = data.map((item: any) => ({
+              id_pedido: item.id_pedido,
+              descricao: item.descricao,
+              data_criacao: item["data criacao"],
+              data_aceitacao: item["data aceitacao"],
+              urgente: item.urgente,
+              nome_usuario: item["nome usuario"],
+              tipo_pedido: tipoPedidoMap[item["tipo pedido"]] || "Tipo desconhecido",
+              status: item.status || "Concluído",
+              endereco: item["endereco usuario"]
+                ? `${item["endereco usuario"][0]}, ${item["endereco usuario"][1]} - ${item["endereco usuario"][2]}, ${item["endereco usuario"][3]} - ${item["endereco usuario"][4]}, CEP: ${item["endereco usuario"][5]}`
+                : "Endereço não informado"
+            }));
 
+            setPedidos(pedidosConvertidos);
+          } else {
+            setPedidos([]);
+          }
+        })
+        .catch((err) => {
+          console.error("Erro ao buscar histórico da empresa:", err);
+        });
+    }
+  }, []);
 
   return (
     <>
@@ -48,17 +75,18 @@ const HistoricoCliente = () => {
           <h1 className="text-2xl font-semibold text-left w-full">Pedidos Atendidos</h1>
 
           {pedidos.length > 0 ? (
-            pedidos.map((pedido, index) => (
+            pedidos.map((pedido) => (
               <CardHistoricoItem
-                key={index}
+                key={pedido.id_pedido}
                 id={pedido.id_pedido}
-                nome={pedido.Nome}
+                nome={pedido.nome_usuario}
                 data_abertura={pedido.data_criacao}
                 data_aceitacao={pedido.data_aceitacao}
-                tipo_ajuda={pedido["tipo pedido"]}
+                tipo_ajuda={pedido.tipo_pedido}
+                status={pedido.status}
                 descricao={pedido.descricao}
                 urgente={pedido.urgente}
-                
+                endereco={pedido.endereco}
               />
             ))
           ) : (

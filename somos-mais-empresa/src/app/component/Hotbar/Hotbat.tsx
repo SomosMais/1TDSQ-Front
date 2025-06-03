@@ -18,7 +18,7 @@ const Hotbar = () => {
         <button
           key={idx}
           onClick={() => router.push(item.path)}
-          className="flex flex-col items-center white hover:text-white transition"
+          className="flex flex-col items-center white hover:text-white transition cursor-pointer"
         >
           <Image src={item.icon} alt={item.label} width={24} height={24} />
           <span className="text-sm mt-1 text-white">{item.label}</span>
