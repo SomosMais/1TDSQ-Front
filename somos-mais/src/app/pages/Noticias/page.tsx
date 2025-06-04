@@ -1,9 +1,10 @@
 'use client';
-import Hotbar from '@/app/component/Hotbar/Hotbat';
-import NoticiaCard from '@/app/component/NoticiaCard/NoticiaCard';
-import NoticiaModal from '@/app/component/NoticiaCard/NoticiaModal';
+
 import React, { useState } from 'react';
 import withAuth from "@/app/utils/withAuth";
+import NoticiaCard from '@/app/component/NoticiaCard/NoticiaCard';
+import NoticiaModal from '@/app/component/NoticiaCard/NoticiaModal';
+import Hotbar from '@/app/component/Hotbar/Hotbar';
 
 interface Noticia {
   id: number;

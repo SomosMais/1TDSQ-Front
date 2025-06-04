@@ -18,7 +18,7 @@ const integrantes: Integrante[] = [
     rm: '560485',
     turma: '1TDSQ',
     atividades: 'Desenvolvimento Backend com Flask e banco Oracle',
-    foto: '/fotos/cleyton.jpg',
+    foto: '/image/cleyton.png',
   },
   {
     nome: 'Matheus Henrique Nascimento de Freitas',
@@ -32,7 +32,7 @@ const integrantes: Integrante[] = [
     rm: '561178',
     turma: '1TDSQ',
     atividades: 'Desenvolvimento Web com Java Spring e Dashboards no portal',
-    foto: '/fotos/pedro.jpg',
+    foto: '/image/pedro.jpg',
   },
 ];
 

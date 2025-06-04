@@ -3,13 +3,14 @@
 import { useRouter } from 'next/navigation';
 import Hotbar from "@/app/component/Hotbar/Hotbat";
 import Image from 'next/image';
+import withAuth from "@/app/utils/withAuth";
 
 const Perfil = () => {
     const router = useRouter();
 
     const handleLogout = () => {
-        localStorage.removeItem("email");
-        router.push("/pages/LoginComum"); 
+        localStorage.removeItem("email_empresa");
+        router.push("/pages/LoginEmpresa"); 
     }
 
     return (
@@ -28,4 +29,4 @@ const Perfil = () => {
     )
 }
 
-export default Perfil;
+export default withAuth(Perfil);

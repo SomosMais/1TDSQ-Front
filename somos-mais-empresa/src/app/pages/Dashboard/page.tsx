@@ -5,6 +5,7 @@ import Contador from "@/app/component/Contador/Constador";
 import Explorar from "@/app/component/Explorar/Explorar";
 import Hotbar from "@/app/component/Hotbar/Hotbat";
 import Cards from "@/app/component/Cards/Cards";
+import withAuth from "@/app/utils/withAuth";
 
 const Dashboard = () => {
   const router = useRouter()
@@ -12,6 +13,8 @@ const Dashboard = () => {
   const [qtdOngs, setQtdOngs] = useState(0);
   const [pedidos, setPedidos] = useState<any[]>([]);
   const [filtroUrgencia, setFiltroUrgencia] = useState("");
+  const [autenticado, setAutenticado] = useState(false); 
+
 
   const tipoNomePorId: { [key: number]: string } = {
     1: "Resgate de Vítimas",
@@ -29,21 +32,32 @@ const Dashboard = () => {
     13: "Fornecimento de Energia Emergencial",
   };
 
+  useEffect(() => {
+      const email = localStorage.getItem("email_empresa");
+      if (!email) {
+        router.push("/pages/LoginEmpresa"); // redireciona se não estiver logado
+      } else {
+        setAutenticado(true); // só permite renderização se autenticado
+      }
+    }, [router]);
+
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/numero_pedidos_concluidos")
+    if (!autenticado) return;
+
+    fetch("https://onetdsq-python.onrender.com/numero_pedidos_concluidos")
       .then((res) => res.json())
       .then((data) => setQtdUsuarios(data["Numero de pedidos concluidos"]))
       .catch((err) => console.error("Erro ao buscar número de usuários ajudados:", err));
 
-    fetch("http://127.0.0.1:5000/numero_ongs")
+    fetch("https://onetdsq-python.onrender.com/numero_ongs")
       .then((res) => res.json())
       .then((data) => setQtdOngs(data["Numero de empresas"]))
       .catch((err) => console.error("Erro ao buscar empresas:", err));
-  }, []);
+  }, [autenticado]);
 
   const aplicarFiltro = () => {
-    fetch("http://127.0.0.1:5000/visualizar_pedidos", {
+    fetch("https://onetdsq-python.onrender.com/visualizar_pedidos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ urgencia: filtroUrgencia }),
@@ -58,7 +72,7 @@ const Dashboard = () => {
       })
       .catch((err) => console.error("Erro ao aplicar filtro:", err));
   };
-
+  if (!autenticado) return null;
   return (
     <>
       <div className="w-full h-[740px] pt-[30px]">
@@ -70,7 +84,7 @@ const Dashboard = () => {
         <div className="flex flex-col mt-[20px] gap-2 w-full h-[200px] bg-gray-100 px-[15px] rounded-2xl shadow-lg">
           <h3 className="font-semibold text-2xl text-left">Explore também</h3>
           <div className="flex gap-10">
-            <Explorar icon="icon_somos+.png" titulo="Conheça SOMOS+" href="SomosMais" />
+            <Explorar icon="icon_somos+.png" titulo="Conheça SOMOS+" href="Empresa" />
             <Explorar icon="icon_time.png" titulo="Nosso time" href="Grupo" />
             <Explorar icon="icon_jornal.png" titulo="Noticias" href="Noticias" />
           </div>
@@ -123,4 +137,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);

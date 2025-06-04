@@ -7,12 +7,12 @@ import Explorar from "@/app/component/Explorar/Explorar";
 
 import CardEmpresa from "@/app/component/CardEmpresa/CardEmpresa";
 import Hotbar from "@/app/component/Hotbar/Hotbar";
-import { useRouter } from "next/navigation";
+import withAuth from "@/app/utils/withAuth";
 
 
 const Dashboard = () => {
 
-  const router = useRouter();
+
   const [qtdUsuarios, setQtdUsuarios] = useState(0);
   const [qtdOngs, setQtdOngs] = useState(0);
   const [empresas, setEmpresas] = useState<any[]>([]);
@@ -20,10 +20,7 @@ const Dashboard = () => {
    useEffect(() => {
 
 
-    const email = localStorage.getItem("email");
-    if (!email) {
-      router.push("/pages/LoginComum"); // Redireciona se não estiver logado
-    }
+    
 
     // Fetch total de usuários ajudados
     fetch("https://onetdsq-python.onrender.com/numero_pedidos_concluidos")
@@ -109,4 +106,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);

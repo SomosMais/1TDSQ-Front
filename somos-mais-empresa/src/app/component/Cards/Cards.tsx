@@ -34,7 +34,7 @@ const Cards: React.FC<CardsProps> = ({
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/aceitar_pedido/${email}/${id}`);
+      const res = await fetch(`https://onetdsq-python.onrender.com/aceitar_pedido/${email}/${id}`);
       const data = await res.json();
 
       if (res.ok) {

@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Hotbar from "@/app/component/Hotbar/Hotbat";
 import CardHistoricoItem from "@/app/component/Card_Historico/Card_Historico";
+import withAuth from "@/app/utils/withAuth";
+
 
 interface PedidoAjuda {
   id_pedido: number;
@@ -39,7 +41,7 @@ const HistoricoCliente = () => {
     const emailSalvo = localStorage.getItem("email_empresa");
 
     if (emailSalvo) {
-      fetch(`http://localhost:5000/historico/empresa/${emailSalvo}`)
+      fetch(`https://onetdsq-python.onrender.com/historico/empresa/${emailSalvo}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data)) {
@@ -99,4 +101,4 @@ const HistoricoCliente = () => {
   );
 };
 
-export default HistoricoCliente;
+export default withAuth(HistoricoCliente);

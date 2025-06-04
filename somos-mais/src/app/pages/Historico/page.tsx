@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import Cards from "@/app/component/Cards/Cards";
 import Hotbar from "@/app/component/Hotbar/Hotbar";
-import { useRouter } from 'next/navigation';
+import withAuth from "@/app/utils/withAuth";
+
 
 
 interface PedidoAjuda {
@@ -20,14 +21,11 @@ interface PedidoAjuda {
 const Historico = () => {
   const [pedidos, setPedidos] = useState<PedidoAjuda[]>([]);
   const [email, setEmail] = useState("");
-  const router = useRouter();
+
 
   useEffect(() => {
   
-    const email = localStorage.getItem("email");
-    if (!email) {
-      router.push("/pages/LoginComum"); // Redireciona se não estiver logado
-    }
+   
     const emailSalvo = localStorage.getItem("email");
     if (emailSalvo) {
       setEmail(emailSalvo);
@@ -81,4 +79,4 @@ const Historico = () => {
   );
 };
 
-export default Historico;
+export default withAuth(Historico);

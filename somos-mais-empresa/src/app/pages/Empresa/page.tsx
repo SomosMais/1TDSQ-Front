@@ -1,7 +1,8 @@
 'use client';
 
-import Hotbar from '@/app/component/Hotbar/Hotbar';
+import Hotbar from '@/app/component/Hotbar/Hotbat';
 import Image from 'next/image';
+import withAuth from "@/app/utils/withAuth"; // 🔐 importação do HOC
 
 
 const SomosMais = () => {
@@ -35,4 +36,4 @@ const SomosMais = () => {
   );
 };
 
-export default SomosMais;
+export default withAuth(SomosMais);

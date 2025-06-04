@@ -3,17 +3,12 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Hotbar from '@/app/component/Hotbar/Hotbar';
-import { useEffect } from 'react';
+import withAuth from "@/app/utils/withAuth";
 
 
 const Perfil = () => {
     const router = useRouter();
-    useEffect(() => {
-    const email = localStorage.getItem("email");
-    if (!email) {
-      router.push("/pages/LoginComum"); // Redireciona se não estiver logado
-    }
-  }, [router]);
+    
     const handleLogout = () => {
         localStorage.removeItem("email");
         router.push("/pages/LoginComum"); 
@@ -35,4 +30,4 @@ const Perfil = () => {
     )
 }
 
-export default Perfil;
+export default withAuth(Perfil);

@@ -2,19 +2,12 @@
 
 import Hotbar from '@/app/component/Hotbar/Hotbar';
 import Image from 'next/image';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import withAuth from "@/app/utils/withAuth";
 
 
   
 const SomosMais = () => {
-    const router = useRouter();
-      useEffect(() => {
-    const email = localStorage.getItem("email");
-    if (!email) {
-      router.push("/pages/LoginComum"); // Redireciona se não estiver logado
-    }
-  }, [router]);
+
   return (
     <>
       <div className="w-full h-[740px] p-6 overflow-y-auto px-4 scrollbar-none">
@@ -45,4 +38,4 @@ const SomosMais = () => {
   );
 };
 
-export default SomosMais;
+export default withAuth(SomosMais);
