@@ -26,7 +26,7 @@ const Cards: React.FC<CardsProps> = (
     const handleCancelar = () => {
     if (id) {
       if (confirm("Tem certeza que deseja cancelar este pedido?")) {
-        fetch(`http://localhost:5000/cancelar_pedido/${id}`)
+        fetch(`https://onetdsq-python.onrender.com/cancelar_pedido/${id}`)
           .then((res) => res.json())
           .then((data) => {
             alert(data.msg);

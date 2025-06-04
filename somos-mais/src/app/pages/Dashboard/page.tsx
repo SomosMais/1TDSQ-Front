@@ -7,16 +7,26 @@ import Explorar from "@/app/component/Explorar/Explorar";
 
 import CardEmpresa from "@/app/component/CardEmpresa/CardEmpresa";
 import Hotbar from "@/app/component/Hotbar/Hotbar";
+import { useRouter } from "next/navigation";
 
 
 const Dashboard = () => {
+
+  const router = useRouter();
   const [qtdUsuarios, setQtdUsuarios] = useState(0);
   const [qtdOngs, setQtdOngs] = useState(0);
   const [empresas, setEmpresas] = useState<any[]>([]);
 
    useEffect(() => {
+
+
+    const email = localStorage.getItem("email");
+    if (!email) {
+      router.push("/pages/LoginComum"); // Redireciona se não estiver logado
+    }
+
     // Fetch total de usuários ajudados
-    fetch("http://127.0.0.1:5000/numero_pedidos_concluidos")
+    fetch("https://onetdsq-python.onrender.com/numero_pedidos_concluidos")
     .then((res) => {
       if (!res.ok) {
         throw new Error("Erro ao buscar dados de pedidos concluídos");
@@ -33,7 +43,7 @@ const Dashboard = () => {
 
 
     // Fetch total de empresas (ONGs)
-    fetch("http://127.0.0.1:5000/numero_ongs")
+    fetch("https://onetdsq-python.onrender.com/numero_ongs")
       .then((res) => res.json())
       .then((data) => {
         setQtdOngs(data["Numero de empresas"]);
@@ -43,7 +53,7 @@ const Dashboard = () => {
       });
 
     // Fetch lista de empresas para os cards
-    fetch("http://127.0.0.1:5000/mostrar_ongs")
+    fetch("https://onetdsq-python.onrender.com/mostrar_ongs")
       .then((res) => res.json())
       .then((data) => {
         setEmpresas(data);

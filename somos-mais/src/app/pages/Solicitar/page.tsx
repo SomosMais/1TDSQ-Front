@@ -19,8 +19,13 @@ const SolicitarAjuda = () => {
   const [mensagem, setMensagem] = useState("");
 
   useEffect(() => {
+    const emailUsuario = localStorage.getItem("email");
+    if (!emailUsuario) {
+      router.push("/pages/LoginComum"); // Redireciona se não estiver logado
+      return;
+    }
     if (id) {
-      fetch(`http://localhost:5000/historico/cliente/${localStorage.getItem("email")}`)
+      fetch(`https://onetdsq-python.onrender.com/historico/cliente/${localStorage.getItem("email")}`)
         .then((res) => res.json())
         .then((data) => {
           const pedido = data.find((p: any) => p.id_pedido == id);
@@ -45,7 +50,7 @@ const SolicitarAjuda = () => {
   }
 
   const url = id
-    ? `http://localhost:5000/atualizar_pedido/${id}`
+    ? `https://onetdsq-python.onrender.com/atualizar_pedido/${id}`
     : `https://onetdsq-python.onrender.com/cadastro_pedido_ajuda`;
 
   const metodo = id ? "PATCH" : "POST";
